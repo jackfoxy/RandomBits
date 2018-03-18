@@ -12,6 +12,6 @@ Sequences of random numbers constrained within a range.
 
 Sequences of random numbers constrained within a range and each member of the sequence is unique.
 
-##Purpose of RandomBits
+## Purpose of RandomBits
 
 Appropriate pseudo-random number generators are perfectly adequate for most random number generation use, and significantly faster than using **RandomBits**, especially because of network latency. **RandomBits** is primarily a demonstration project.
