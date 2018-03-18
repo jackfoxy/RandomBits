@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net47</TargetFramework>
+    <RootNamespace>RandomBits.Tests</RootNamespace>
+    <AssemblyName>RandomBits.Tests</AssemblyName>
+    <Name>RandomBits.Tests</Name>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="BoolTest.fs" />
+    <Compile Include="ByteTest.fs" />
+    <Compile Include="FsCheckTest.fs" />
+    <Compile Include="Generators.fs" />
+    <Compile Include="Int16Test.fs" />
+    <Compile Include="Int32Test.fs" />
+    <Compile Include="Int64Test.fs" />
+    <Compile Include="MockTest.fs" />
+    <Compile Include="RunTests.fs" />
+    <None Include="paket.references" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\RandomBits\RandomBits.fsproj"></ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
+</Project>

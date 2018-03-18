@@ -1,0 +1,29 @@
+type file
+id RandomBits
+title
+    RandomBits
+owners
+    Jack Fox
+authors 
+    Jack Fox
+projectUrl
+    https://github.com/jackfoxy/RandomBits
+iconUrl
+    https://raw.githubusercontent.com/jackfoxy/RandomBits/master/docs/files/img/logo.png
+licenseUrl
+    https://github.com/jackfoxy/RandomBits/blob/master/LICENSE.txt
+requireLicenseAcceptance
+    false
+language
+    F#
+copyright
+    Copyright 2017
+tags
+    random crypto cryptography F# #fsharp dotnet randomnumber randomnumbers
+summary
+    Random bits from ANU.
+description
+    Random bits from ANU formatted for .NET programming.
+
+files
+	../../bin/RandomBits ==> lib

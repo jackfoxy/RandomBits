@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net47;netstandard2.0</TargetFrameworks>
+    <RootNamespace>RandomBits</RootNamespace>
+    <AssemblyName>RandomBits</AssemblyName>
+    <Name>RandomBits</Name>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Prelude.fsi" />
+    <Compile Include="Prelude.fs" />
+    <Compile Include="RandomBits.fs" />
+    <Compile Include="Library.fs" />
+    <None Include="Scripts\Script.fsx" />
+    <None Include="paket.references" />
+    <None Include="paket.template" />
+  </ItemGroup>
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
+</Project>
