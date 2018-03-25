@@ -6,7 +6,7 @@ open System.Globalization
 open System.Reflection
 open System.Text
 
-module Prelude =
+module internal Prelude =
 
     let bind f = 
         function

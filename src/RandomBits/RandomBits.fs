@@ -11,6 +11,7 @@ open FSharpx.Collections
 
 type private AnuJSON = JsonProvider<"""{"type":"string","length":100,"size":100,"data":["9b","b2"],"success":true}""">
 
+/// Source of random bit stream from ANU.
 type RandomBits =
     val private anuBlockCount : int  //number of 1024 byte blocks per request to ANU
     val private anuUrl : string
@@ -441,13 +442,13 @@ type RandomBits =
     ///random unsigned 16-bit integer in range inclusive of lower and exclusive of upper seq of length
     member this.RndUint16Seq (inclLower, exlUpper, length)  = this.rndUnsignRangeSeq inclLower exlUpper length 0us 1us
 
-    ///random usigned 32-bit integer in range inclusive of lower and exclusive of upper seq of length
+    ///random signed 32-bit integer in range inclusive of lower and exclusive of upper seq of length
     member this.RndInt32Seq (inclLower, exlUpper, length)  = this.rndSignRangeSeq inclLower exlUpper length 0L 1L (int64) (int)
 
     ///random unsigned 32-bit integer in range inclusive of lower and exclusive of upper seq of length
     member this.RndUint32Seq (inclLower, exlUpper, length)  = this.rndUnsignRangeSeq inclLower exlUpper length 0u 1u
 
-    ///random usigned 64-bit integer in range inclusive of lower and exclusive of upper seq of length
+    ///random signed 64-bit integer in range inclusive of lower and exclusive of upper seq of length
     member this.RndInt64Seq ((inclLower : int64), (exlUpper : int64), length)  = this.rndSignRangeSeq inclLower exlUpper length 0I 1I (this.bigint) (int64)
 
     ///random unsigned 64-bit integer in range inclusive of lower and exclusive of upper seq of length

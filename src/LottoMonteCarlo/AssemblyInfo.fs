@@ -2,7 +2,7 @@
 namespace System
 open System.Reflection
 
-[<assembly: AssemblyTitleAttribute("RandomBitsConsole")>]
+[<assembly: AssemblyTitleAttribute("LottoMonteCarlo")>]
 [<assembly: AssemblyProductAttribute("RandomBits")>]
 [<assembly: AssemblyDescriptionAttribute("Random bits from ANU.")>]
 [<assembly: AssemblyVersionAttribute("0.0.1")>]
@@ -11,7 +11,7 @@ open System.Reflection
 do ()
 
 module internal AssemblyVersionInformation =
-    let [<Literal>] AssemblyTitle = "RandomBitsConsole"
+    let [<Literal>] AssemblyTitle = "LottoMonteCarlo"
     let [<Literal>] AssemblyProduct = "RandomBits"
     let [<Literal>] AssemblyDescription = "Random bits from ANU."
     let [<Literal>] AssemblyVersion = "0.0.1"

@@ -1,5 +1,7 @@
 # RandomBits
 
+[Documentation](https://jackfoxy.github.io/RandomBits/)
+
 **RandomBits** is a F# library consuming the [ANU Quantum Random Numbers Server](http://qrng.anu.edu.au/index.php) API, providing the following end-products:
 
 Signed and unsigned 8, 16, 32, and 64 bit random numbers.

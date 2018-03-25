@@ -11,10 +11,8 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Prelude.fsi" />
     <Compile Include="Prelude.fs" />
     <Compile Include="RandomBits.fs" />
-    <Compile Include="Library.fs" />
     <None Include="Scripts\Script.fsx" />
     <None Include="paket.references" />
     <None Include="paket.template" />
