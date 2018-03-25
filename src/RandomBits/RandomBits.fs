@@ -82,27 +82,27 @@ type RandomBits =
         with
             | _ -> ()
 
-    member private this.next64() =
+    member private __.next64() =
 
-        let (success, ru64) = this.theQueue.TryDequeue()
+        let (success, ru64) = __.theQueue.TryDequeue()
         
         if success then 
-            this.consume64Count <- this.consume64Count + 1L
+            __.consume64Count <- __.consume64Count + 1L
             ru64
         else 
-            RandomBits.retrieveBits this.theQueue this.anuUrl this.anuBlockCount  this.theMock
-            let (success, ru64) = this.theQueue.TryDequeue()
-            this.consume64Count <- this.consume64Count + 1L
+            RandomBits.retrieveBits __.theQueue __.anuUrl __.anuBlockCount  __.theMock
+            let (success, ru64) = __.theQueue.TryDequeue()
+            __.consume64Count <- __.consume64Count + 1L
             ru64                             
 
-    member private this.nextBit() =
+    member private __.nextBit() =
         
-        this.ptr <- this.ptr >>> 1
-        if this.ptr = 0UL then
-            this.bitSource <- this.next64()
-            this.ptr <- 9223372036854775808UL
+        __.ptr <- __.ptr >>> 1
+        if __.ptr = 0UL then
+            __.bitSource <- __.next64()
+            __.ptr <- 9223372036854775808UL
 
-        ((this.ptr &&& this.bitSource) = this.ptr)
+        ((__.ptr &&& __.bitSource) = __.ptr)
 
     static member inline private unsignedOfBit displ bitOffset bit64 bitSize (zero : 'a) (one : 'a) =     //inline to make bitwise operator generic
 
@@ -110,9 +110,9 @@ type RandomBits =
         if (x' &&& bit64) = x' then one <<< (bitSize - bitOffset)
         else zero
 
-    member inline private this.bitsToNumber bitSize (zero : 'a) (one : 'a) =    //inline to make bitwise operator generic
+    member inline private __.bitsToNumber bitSize (zero : 'a) (one : 'a) =    //inline to make bitwise operator generic
 
-        let bit64 = this.next64()
+        let bit64 = __.next64()
 
         let rec loop acc offset = 
             if offset > bitSize then acc
@@ -120,7 +120,7 @@ type RandomBits =
         
         loop (RandomBits.unsignedOfBit 0 1 bit64 bitSize zero one) 2
 
-    member inline private this.bitsToNumber2 bitSize (zero : 'a) (one : 'a) bit64 displ =    //inline to make bitwise operator generic
+    member inline private __.bitsToNumber2 bitSize (zero : 'a) (one : 'a) bit64 displ =    //inline to make bitwise operator generic
 
         let rec loop acc offset = 
             if offset > bitSize then acc
@@ -128,7 +128,7 @@ type RandomBits =
         
         loop (RandomBits.unsignedOfBit displ 1 bit64 bitSize zero one) 2
 
-    member inline private  this.randomWalk (lower : 'a) (upper : 'a) (zero : 'a) (one : 'a) =
+    member inline private  __.randomWalk (lower : 'a) (upper : 'a) (zero : 'a) (one : 'a) =
 
         //bit shifts to determine highest order bit of upper (power)
         let pwr =       
@@ -143,7 +143,7 @@ type RandomBits =
             match pwrDec with
             | -1 -> acc
             | _ ->
-                if this.nextBit() then loop (acc +  (one <<< pwrDec)) (pwrDec - 1)
+                if __.nextBit() then loop (acc +  (one <<< pwrDec)) (pwrDec - 1)
                 else loop acc (pwrDec - 1)
 
         //greater than upper? try again
@@ -155,13 +155,13 @@ type RandomBits =
 
         myRnd + lower
 
-    member inline private  this.rndInRange (inclLower : 'a) (exlUpper : 'a) (zero : 'a) (one : 'a) =
+    member inline private  __.rndInRange (inclLower : 'a) (exlUpper : 'a) (zero : 'a) (one : 'a) =
         let range =  exlUpper -  inclLower 
         if range < one then failwith "range must be greater than 1"
 
-        this.randomWalk inclLower (exlUpper - (inclLower + one)) zero one
+        __.randomWalk inclLower (exlUpper - (inclLower + one)) zero one
 
-    member inline private  this.rndSignInRange (inclLower : 'a) (exlUpper : 'a) (uZero : 'c) (nextOne : 'b) (nextSigned : 'a -> 'b) 
+    member inline private  __.rndSignInRange (inclLower : 'a) (exlUpper : 'a) (uZero : 'c) (nextOne : 'b) (nextSigned : 'a -> 'b) 
         (nextSigned2 : 'c -> 'b) (signed : 'b -> 'a) (unsigned : 'b -> 'c)  (uConv : ('c * 'c) -> 'c) = 
 
         let lower =  (nextSigned inclLower)
@@ -170,26 +170,26 @@ type RandomBits =
 
         signed (nextSigned2 (uConv (uZero, (unsigned range))) + lower)
 
-    member inline private this.rndSeq length bitSize (zero : 'a) (one : 'a) (signed : 'a -> 'b) = 
+    member inline private __.rndSeq length bitSize (zero : 'a) (one : 'a) (signed : 'a -> 'b) = 
 
         if length < 1 then invalidArg  "length" (sprintf "%i must be greater than 0" length)
 
         let ptr = ref length 
 
         seq {while !ptr > 0 do
-                let bit64 = this.next64()
+                let bit64 = __.next64()
 
                 let n' =
                     if !ptr > (64 / bitSize) then (64 / bitSize)
                     else !ptr
 
                 for i = 1 to n' do     
-                    yield signed (this.bitsToNumber2 bitSize zero one bit64 ((i - 1) * bitSize))
+                    yield signed (__.bitsToNumber2 bitSize zero one bit64 ((i - 1) * bitSize))
 
                 ptr := !ptr - n'
              }
 
-    member inline private this.rndSignRangeSeq (inclLower : 'a) (exlUpper : 'a) length (nextZero : 'b) (nextOne : 'b)  (nextSigned : 'a -> 'b) (signed : 'b -> 'a) = 
+    member inline private __.rndSignRangeSeq (inclLower : 'a) (exlUpper : 'a) length (nextZero : 'b) (nextOne : 'b)  (nextSigned : 'a -> 'b) (signed : 'b -> 'a) = 
         let range =  (nextSigned exlUpper) - (nextSigned inclLower)
         if range < nextOne then invalidArg  "range" (sprintf "%i %i range must be greater than 0" inclLower exlUpper)
         if length < 1 then invalidArg  "length" (sprintf "%i must be greater than 0" length)
@@ -198,20 +198,20 @@ type RandomBits =
         let upper = (nextSigned exlUpper) - (lower + nextOne)
 
         seq {for i = 1 to length do
-                yield (signed (this.randomWalk lower upper nextZero nextOne))
+                yield (signed (__.randomWalk lower upper nextZero nextOne))
              }
 
-    member inline private this.rndUnsignRangeSeq (inclLower : 'a) (exlUpper : 'a) length (zero : 'a) (one : 'a)  = 
+    member inline private __.rndUnsignRangeSeq (inclLower : 'a) (exlUpper : 'a) length (zero : 'a) (one : 'a)  = 
 
         let range =  exlUpper -  inclLower 
         if range < one then invalidArg  "range" (sprintf "%i %i range must be greater than 0" inclLower exlUpper)
         if length < 1 then invalidArg  "length" (sprintf "%i must be greater than 0" length)
 
         seq {for i = 1 to length do
-                yield this.rndInRange inclLower exlUpper zero one
+                yield __.rndInRange inclLower exlUpper zero one
             }
 
-    member inline private this.rndSignUniqueSeq (inclLower : 'a) (exlUpper : 'a) length  (nextZero : 'b) (nextOne : 'b) (nextSigned : 'a -> 'b) (signed : 'b -> 'a) = 
+    member inline private __.rndSignUniqueSeq (inclLower : 'a) (exlUpper : 'a) length  (nextZero : 'b) (nextOne : 'b) (nextSigned : 'a -> 'b) (signed : 'b -> 'a) = 
         
         let lower = nextSigned inclLower
         let upper = nextSigned exlUpper
@@ -225,7 +225,7 @@ type RandomBits =
         
         seq {for i = 1 to length do
 
-                let x = this.randomWalk lower (upper - !count - (lower + nextOne)) nextZero nextOne
+                let x = __.randomWalk lower (upper - !count - (lower + nextOne)) nextZero nextOne
 
                 let x' = Seq.fold (fun x t -> 
                                     if x >= t then x + nextOne
@@ -235,7 +235,7 @@ type RandomBits =
                 h := (!h).Insert x'
             }
 
-    member inline private this.rndUnsignUniqueSeq (inclLower : 'a) (exlUpper : 'a) length (zero : 'a) (one : 'a) = 
+    member inline private __.rndUnsignUniqueSeq (inclLower : 'a) (exlUpper : 'a) length (zero : 'a) (one : 'a) = 
 
         let range =  exlUpper -  inclLower 
         if range < one then invalidArg  "range" (sprintf "%i %i range must be greater than 0" inclLower exlUpper)
@@ -247,7 +247,7 @@ type RandomBits =
         
         seq {for i = 1 to length do
 
-                let x = this.randomWalk inclLower (exlUpper - !count - (inclLower + one)) zero one
+                let x = __.randomWalk inclLower (exlUpper - !count - (inclLower + one)) zero one
 
                 let x' = Seq.fold (fun x t -> 
                                     if x >= t then x + one
@@ -257,11 +257,11 @@ type RandomBits =
                 h := (!h).Insert x'
             }
 
-    member inline private this.bigint (x : int64) = BigInteger(x)
+    member inline private __.bigint (x : int64) = BigInteger(x)
 
-    member inline private this.bigintU (x : uint64) = BigInteger(x)
+    member inline private __.bigintU (x : uint64) = BigInteger(x)
 
-    new () as this =
+    new () as __ =
         {anuBlockCount = 32;
         anuUrl = "https://qrng.anu.edu.au/API/jsonI.php";
         consume64Count = 0L;
@@ -276,9 +276,9 @@ type RandomBits =
          }
 
         then
-        RandomBits.retrieveBits this.theQueue this.anuUrl this.anuBlockCount ""
+        RandomBits.retrieveBits __.theQueue __.anuUrl __.anuBlockCount ""
 
-    new (mock) as this =
+    new (mock) as __ =
         {anuBlockCount = 0;
         anuUrl = "";
         maxCache = 1;
@@ -293,7 +293,7 @@ type RandomBits =
          }
 
         then
-        if this.theMock.Length < 18 then failwith "Mock string must represent at least one 64-bit integer"
+        if __.theMock.Length < 18 then failwith "Mock string must represent at least one 64-bit integer"
 
         let l = Array.fold (fun l t -> match t with
                                         | '0' -> 0u::l
@@ -315,168 +315,168 @@ type RandomBits =
                                         | c -> failwith (c.ToString() + " not a hex character in mock.") ) [] (mock.ToCharArray())
                                         //seems to somehow not throw out of the two anon funs interfaceretrieveBits, so repeating it here
 
-        RandomBits.retrieveBits this.theQueue "" 0 this.theMock
+        RandomBits.retrieveBits __.theQueue "" 0 __.theMock
 
-    member this.ANU_BlockCount = this.anuBlockCount
-    member this.ANU_Url = this.anuUrl
-    member this.CacheLength = this.theQueue.Count
-    member this.Consume64Count = this.consume64Count
-    member this.MaxCache = this.maxCache
-    member this.MaxPersistCache = this.maxPersistCache
-    member this.PersistCacheLength = 0
-    member this.PersistPath = this.persistPath
-    member this.ReusePeristCache = this.reusePeristCache
+    member __.ANU_BlockCount = __.anuBlockCount
+    member __.ANU_Url = __.anuUrl
+    member __.CacheLength = __.theQueue.Count
+    member __.Consume64Count = __.consume64Count
+    member __.MaxCache = __.maxCache
+    member __.MaxPersistCache = __.maxPersistCache
+    member __.PersistCacheLength = 0
+    member __.PersistPath = __.persistPath
+    member __.ReusePeristCache = __.reusePeristCache
 
     (* random numbers *)
 
     ///random bool
-    member this.RndBool() =
-        let x = this.next64()
+    member __.RndBool() =
+        let x = __.next64()
 
         let x' = (1UL <<< 63)
         if (x' &&& x) = x' then true
         else false
 
     ///random signed 8-bit integer
-    member this.RndSByte() = sbyte (this.bitsToNumber 8 0uy 1uy)
+    member __.RndSByte() = sbyte (__.bitsToNumber 8 0uy 1uy)
 
     ///random unsigned 8-bit integer
-    member this.RndByte() = this.bitsToNumber 8 0uy 1uy
+    member __.RndByte() = __.bitsToNumber 8 0uy 1uy
 
     ///random signed 16-bit integer
-    member this.RndInt16() = int16 (this.bitsToNumber 16 0us 1us)
+    member __.RndInt16() = int16 (__.bitsToNumber 16 0us 1us)
 
     ///random unsigned 16-bit integer
-    member this.RndUint16() = this.bitsToNumber 16 0us 1us 
+    member __.RndUint16() = __.bitsToNumber 16 0us 1us 
 
     ///random signed 32-bit integer
-    member this.RndInt32() = int32 (this.bitsToNumber 32 0 1)
+    member __.RndInt32() = int32 (__.bitsToNumber 32 0 1)
 
     ///random unsigned 32-bit integer
-    member this.RndUint32() = this.bitsToNumber 32 0u 1u
+    member __.RndUint32() = __.bitsToNumber 32 0u 1u
 
     ///random signed 64-bit integer
-    member this.RndInt64() = int64 (this.next64())
+    member __.RndInt64() = int64 (__.next64())
 
     ///random unsigned 64-bit integer
-    member this.RndUint64() = this.next64()
+    member __.RndUint64() = __.next64()
 
     (* random numbers in range *)
 
     ///random signed 8-bit integer in range inclusive of lower and exclusive of upper
-    member this.RndSByte (inclLower, exlUpper) = this.rndSignInRange inclLower exlUpper 0uy 1s (int16) (int16) (sbyte) (byte) (this.RndByte)
+    member __.RndSByte (inclLower, exlUpper) = __.rndSignInRange inclLower exlUpper 0uy 1s (int16) (int16) (sbyte) (byte) (__.RndByte)
 
     ///random unsigned 8-bit integer in range inclusive of lower and exclusive of upper
-    member this.RndByte (inclLower, exlUpper) = this.rndInRange inclLower exlUpper 0uy 1uy
+    member __.RndByte (inclLower, exlUpper) = __.rndInRange inclLower exlUpper 0uy 1uy
 
     ///random signed 16-bit integer in range inclusive of lower and exclusive of upper
-    member this.RndInt16 (inclLower, exlUpper) = this.rndSignInRange inclLower exlUpper 0us 1 (int32) (int32) (int16) (uint16) (this.RndUint16)
+    member __.RndInt16 (inclLower, exlUpper) = __.rndSignInRange inclLower exlUpper 0us 1 (int32) (int32) (int16) (uint16) (__.RndUint16)
 
     ///random unsigned 16-bit integer in range inclusive of lower and exclusive of upper
-    member this.RndUint16 (inclLower, exlUpper) = this.rndInRange inclLower exlUpper 0us 1us
+    member __.RndUint16 (inclLower, exlUpper) = __.rndInRange inclLower exlUpper 0us 1us
 
     ///random signed 32-bit integer in range inclusive of lower and exclusive of upper
-    member this.RndInt32 (inclLower, exlUpper) = this.rndSignInRange inclLower exlUpper 0u 1L (int64) (int64) (int32) (uint32) (this.RndUint32)
+    member __.RndInt32 (inclLower, exlUpper) = __.rndSignInRange inclLower exlUpper 0u 1L (int64) (int64) (int32) (uint32) (__.RndUint32)
 
     ///random unsigned 32-bit integer in range inclusive of lower and exclusive of upper
-    member this.RndUint32 (inclLower, exlUpper) = this.rndInRange inclLower exlUpper 0u 1u
+    member __.RndUint32 (inclLower, exlUpper) = __.rndInRange inclLower exlUpper 0u 1u
 
     ///random signed 64-bit integer in range inclusive of lower and exclusive of upper
-    member this.RndInt64 (inclLower, exlUpper) = 
+    member __.RndInt64 (inclLower, exlUpper) = 
 
-        let lower =  (this.bigint inclLower)
-        let range =  (this.bigint exlUpper) - lower
+        let lower =  (__.bigint inclLower)
+        let range =  (__.bigint exlUpper) - lower
         if range < 1I then invalidArg  "range" (sprintf "%i %i range must be greater than 0" inclLower exlUpper)
 
-        int64 (this.bigintU (this.RndUint64 (0UL, (uint64 range))) + lower)
+        int64 (__.bigintU (__.RndUint64 (0UL, (uint64 range))) + lower)
 
     ///random unsigned 64-bit integer in range inclusive of lower and exclusive of upper
-    member this.RndUint64 (inclLower, exlUpper) = this.rndInRange inclLower exlUpper 0UL 1UL
+    member __.RndUint64 (inclLower, exlUpper) = __.rndInRange inclLower exlUpper 0UL 1UL
 
     (* random sequences *)
     
     ///random bool seq of length
-    member this.RndBoolSeq length =
+    member __.RndBoolSeq length =
 
         if length < 1 then invalidArg  "length" (sprintf "%i must be greater than 0" length)
 
         seq {for i = 1 to length do
-                yield this.nextBit()
+                yield __.nextBit()
             }
 
     ///random signed 8-bit integer seq of length
-    member this.RndSByteSeq length = this.rndSeq length 8 0y 1y (sbyte)
+    member __.RndSByteSeq length = __.rndSeq length 8 0y 1y (sbyte)
 
     ///random unsigned 8-bit integer seq of length
-    member this.RndByteSeq length = this.rndSeq length 8 0uy 1uy (byte)
+    member __.RndByteSeq length = __.rndSeq length 8 0uy 1uy (byte)
 
     ///random signed 16-bit integer seq of length
-    member this.RndInt16Seq length = this.rndSeq length 16 0s 1s (int16)
+    member __.RndInt16Seq length = __.rndSeq length 16 0s 1s (int16)
 
     ///random unsigned 16-bit integer seq of length
-    member this.RndUint16Seq length = this.rndSeq length 16 0us 1us (uint16)
+    member __.RndUint16Seq length = __.rndSeq length 16 0us 1us (uint16)
 
     ///random signed 32-bit integer seq of length
-    member this.RndInt32Seq length = this.rndSeq length 32 0 1 (int)
+    member __.RndInt32Seq length = __.rndSeq length 32 0 1 (int)
 
     ///random unsigned 32-bit integer seq of length
-    member this.RndUint32Seq length = this.rndSeq length 32 0u 1u (uint32)
+    member __.RndUint32Seq length = __.rndSeq length 32 0u 1u (uint32)
 
     ///random signed 64-bit integer seq of length
-    member this.RndInt64Seq length = this.rndSeq length 64 0L 1L (int64)
+    member __.RndInt64Seq length = __.rndSeq length 64 0L 1L (int64)
 
     ///random unsigned 64-bit integer seq of length
-    member this.RndUint64Seq length = this.rndSeq length 64 0UL 1UL (uint64)
+    member __.RndUint64Seq length = __.rndSeq length 64 0UL 1UL (uint64)
 
     (* random numbers in range sequences *)
 
     ///random signed 8-bit integer in range inclusive of lower and exclusive of upper seq of length
-    member this.RndSByteSeq (inclLower, exlUpper, length)  = this.rndSignRangeSeq inclLower exlUpper length 0s 1s (int16) (sbyte)
+    member __.RndSByteSeq (inclLower, exlUpper, length)  = __.rndSignRangeSeq inclLower exlUpper length 0s 1s (int16) (sbyte)
 
     ///random unsigned 8-bit integer in range inclusive of lower and exclusive of upper seq of length
-    member this.RndByteSeq (inclLower, exlUpper, length)  = this.rndUnsignRangeSeq inclLower exlUpper length 0uy 1uy
+    member __.RndByteSeq (inclLower, exlUpper, length)  = __.rndUnsignRangeSeq inclLower exlUpper length 0uy 1uy
 
     ///random signed 16-bit integer in range inclusive of lower and exclusive of upper seq of length
-    member this.RndInt16Seq (inclLower, exlUpper, length)  = this.rndSignRangeSeq inclLower exlUpper length 0 1 (int32) (int16)
+    member __.RndInt16Seq (inclLower, exlUpper, length)  = __.rndSignRangeSeq inclLower exlUpper length 0 1 (int32) (int16)
     
     ///random unsigned 16-bit integer in range inclusive of lower and exclusive of upper seq of length
-    member this.RndUint16Seq (inclLower, exlUpper, length)  = this.rndUnsignRangeSeq inclLower exlUpper length 0us 1us
+    member __.RndUint16Seq (inclLower, exlUpper, length)  = __.rndUnsignRangeSeq inclLower exlUpper length 0us 1us
 
     ///random signed 32-bit integer in range inclusive of lower and exclusive of upper seq of length
-    member this.RndInt32Seq (inclLower, exlUpper, length)  = this.rndSignRangeSeq inclLower exlUpper length 0L 1L (int64) (int)
+    member __.RndInt32Seq (inclLower, exlUpper, length)  = __.rndSignRangeSeq inclLower exlUpper length 0L 1L (int64) (int)
 
     ///random unsigned 32-bit integer in range inclusive of lower and exclusive of upper seq of length
-    member this.RndUint32Seq (inclLower, exlUpper, length)  = this.rndUnsignRangeSeq inclLower exlUpper length 0u 1u
+    member __.RndUint32Seq (inclLower, exlUpper, length)  = __.rndUnsignRangeSeq inclLower exlUpper length 0u 1u
 
     ///random signed 64-bit integer in range inclusive of lower and exclusive of upper seq of length
-    member this.RndInt64Seq ((inclLower : int64), (exlUpper : int64), length)  = this.rndSignRangeSeq inclLower exlUpper length 0I 1I (this.bigint) (int64)
+    member __.RndInt64Seq ((inclLower : int64), (exlUpper : int64), length)  = __.rndSignRangeSeq inclLower exlUpper length 0I 1I (__.bigint) (int64)
 
     ///random unsigned 64-bit integer in range inclusive of lower and exclusive of upper seq of length
-    member this.RndUint64Seq (inclLower, exlUpper, length)  = this.rndUnsignRangeSeq inclLower exlUpper length 0UL 1UL
+    member __.RndUint64Seq (inclLower, exlUpper, length)  = __.rndUnsignRangeSeq inclLower exlUpper length 0UL 1UL
 
     (* unique random numbers in range sequences *)
 
     ///random unique usigned 8-bit integer in range inclusive of lower and exclusive of upper seq of length
-    member this.RndSByteUniqueSeq (inclLower, exlUpper, length)  = this.rndSignUniqueSeq inclLower exlUpper length 0s 1s (int16) (sbyte)
+    member __.RndSByteUniqueSeq (inclLower, exlUpper, length)  = __.rndSignUniqueSeq inclLower exlUpper length 0s 1s (int16) (sbyte)
 
     ///random unique unsigned 8-bit integer in range inclusive of lower and exclusive of upper seq of length
-    member this.RndByteUniqueSeq (inclLower, exlUpper, length)  = this.rndUnsignUniqueSeq inclLower exlUpper length 0uy 1uy
+    member __.RndByteUniqueSeq (inclLower, exlUpper, length)  = __.rndUnsignUniqueSeq inclLower exlUpper length 0uy 1uy
 
     ///random unique signed 16-bit integer in range inclusive of lower and exclusive of upper seq of length
-    member this.RndInt16UniqueSeq (inclLower, exlUpper, length)  = this.rndSignUniqueSeq inclLower exlUpper length 0 1 (int32) (int16)
+    member __.RndInt16UniqueSeq (inclLower, exlUpper, length)  = __.rndSignUniqueSeq inclLower exlUpper length 0 1 (int32) (int16)
 
     ///random unique unsigned 16-bit integer in range inclusive of lower and exclusive of upper seq of length
-    member this.RndUint16UniqueSeq (inclLower, exlUpper, length)  = this.rndUnsignUniqueSeq inclLower exlUpper length 0us 1us
+    member __.RndUint16UniqueSeq (inclLower, exlUpper, length)  = __.rndUnsignUniqueSeq inclLower exlUpper length 0us 1us
 
     ///random unique signed 32-bit integer in range inclusive of lower and exclusive of upper seq of length
-    member this.RndInt32UniqueSeq (inclLower, exlUpper, length)  = this.rndSignUniqueSeq inclLower exlUpper length 0L 1L (int64) (int)
+    member __.RndInt32UniqueSeq (inclLower, exlUpper, length)  = __.rndSignUniqueSeq inclLower exlUpper length 0L 1L (int64) (int)
 
     ///random unique unsigned 32-bit integer in range inclusive of lower and exclusive of upper seq of length
-    member this.RndUint32UniqueSeq (inclLower, exlUpper, length)  = this.rndUnsignUniqueSeq inclLower exlUpper length 0u 1u
+    member __.RndUint32UniqueSeq (inclLower, exlUpper, length)  = __.rndUnsignUniqueSeq inclLower exlUpper length 0u 1u
     
         
 
     with
     interface IDisposable with
-        member this.Dispose() = ()
+        member __.Dispose() = ()
 
