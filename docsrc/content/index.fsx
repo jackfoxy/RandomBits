@@ -8,7 +8,7 @@ RandomBits
 ======================
 
 **RandomBits** is an F# .NET Standard library generating signed and unsigned 1, 8, 16, 32, and 64 bit random numbers from bits streamed from
-the [Australian Nathional University Quantum Random Numbers Server](http://qrng.anu.edu.au/index.php).
+the [Australian National University Quantum Random Numbers Server](http://qrng.anu.edu.au/index.php).
 
 Signed and unsigned sequences
 -----------------------------
@@ -113,9 +113,9 @@ The library is available under Public Domain license, which allows modification 
 redistribution for both commercial and non-commercial purposes. For more information see the 
 [License file][license] in the GitHub repository. 
 
-  [content]: https://github.com/fsprojects/RandomBits/tree/master/docs/content
-  [gh]: https://github.com/fsprojects/RandomBits
-  [issues]: https://github.com/fsprojects/RandomBits/issues
-  [readme]: https://github.com/fsprojects/RandomBits/blob/master/README.md
-  [license]: https://github.com/fsprojects/RandomBits/blob/master/LICENSE.txt
+  [content]: https://github.com/jackfoxy/RandomBits/tree/master/docs/content
+  [gh]: https://github.com/jackfoxy/RandomBits
+  [issues]: https://github.com/jackfoxy/RandomBits/issues
+  [readme]: https://github.com/jackfoxy/RandomBits/blob/master/README.md
+  [license]: https://github.com/jackfoxy/RandomBits/blob/master/LICENSE.txt
 *)
