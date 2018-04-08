@@ -6,8 +6,6 @@ open System.Collections.Concurrent
 open System.Net
 open System.Numerics
 open FSharpx.Collections
-//open FSharpx.DataStructures
-//open FSharpx.TypeProviders.Documents
 
 type private AnuJSON = JsonProvider<"""{"type":"string","length":100,"size":100,"data":["9b","b2"],"success":true}""">
 
@@ -16,10 +14,6 @@ type RandomBits =
     val private anuBlockCount : int  //number of 1024 byte blocks per request to ANU
     val private anuUrl : string
     val mutable private consume64Count : int64
-    val private maxCache : int
-    val private maxPersistCache : int
-    val private persistPath : string
-    val private reusePeristCache : bool
     val private theMock : string
     val private theQueue : ConcurrentQueue<uint64>
 
@@ -28,57 +22,48 @@ type RandomBits =
  
     static member private retrieveBits (theQueue : ConcurrentQueue<uint64>) (anuUrl : string) (anuBlockCount : int) (mock : string) =
         use webClient = new WebClient()
-        try 
-            let x = 
-                if mock.Length > 0 then 
-                    ""
-                else 
-                    webClient.DownloadString (anuUrl + "?type=hex16&length=" + anuBlockCount.ToString() + "&size=1024")
-            if (mock.Length > 0) || (AnuJSON.Parse x).Success then 
-                
-                let f = (fun n ->
-                    let nn = n.ToString()
-                    let nnn = nn.Substring(1, (nn.Length - 2))  //lose quote marks around string
-                    let l = Array.fold (fun l t -> match t with
-                                                    | '0' -> 0u::l
-                                                    | '1' -> 1u::l
-                                                    | '2' -> 2u::l
-                                                    | '3' -> 3u::l
-                                                    | '4' -> 4u::l
-                                                    | '5' -> 5u::l
-                                                    | '6' -> 6u::l
-                                                    | '7' -> 7u::l
-                                                    | '8' -> 8u::l
-                                                    | '9' -> 9u::l
-                                                    | 'a' | 'A' -> 10u::l
-                                                    | 'b' | 'B' -> 11u::l
-                                                    | 'c' | 'C' -> 12u::l
-                                                    | 'd' | 'D' -> 13u::l
-                                                    | 'e' | 'E' -> 14u::l
-                                                    | 'f' | 'F' -> 15u::l
-                                                    | c -> failwith (c.ToString() + " not a hex character in cache feed.") ) [] (nnn.ToCharArray())
-                                                    //seems to somehow not throw out of the two anon funs
-                    let rec loop acc = function
-                        | h1 :: h2 :: tl -> loop ((h1 |||  (h2  <<< 4)) :: acc) tl
-                        | _ -> acc
-                
-                    let lBytes = loop [] l  //not really bytes, since they are int32
-                 
-                    let rec loop2 = function
-                        | h0 :: h1 :: h2 :: h3 :: h4 :: h5 :: h6 :: h7 :: tl -> 
-                            theQueue.Enqueue ( ((uint64 h0) <<< 56) ||| ((uint64 h1) <<< 48)  ||| ((uint64 h2) <<< 40)  ||| ((uint64 h3) <<< 32)  
-                                                ||| ((uint64 h4) <<< 24) ||| ((uint64 h5) <<< 16)  ||| ((uint64 h6) <<< 8)  ||| (uint64 h7) )
-                            loop2 tl
-                        | _ -> ()
-                    loop2 lBytes)
 
-                if mock.Length > 0 then 
-                    Seq.iter f (seq {yield mock})
-                else 
-                    Seq.iter f (AnuJSON.Parse x).Data
+        let f = (fun n ->
+            let nn = n.ToString()
+            let nnn = nn.Substring(1, (nn.Length - 2))  //lose quote marks around string
+            let l = Array.fold (fun l t -> match t with
+                                            | '0' -> 0u::l
+                                            | '1' -> 1u::l
+                                            | '2' -> 2u::l
+                                            | '3' -> 3u::l
+                                            | '4' -> 4u::l
+                                            | '5' -> 5u::l
+                                            | '6' -> 6u::l
+                                            | '7' -> 7u::l
+                                            | '8' -> 8u::l
+                                            | '9' -> 9u::l
+                                            | 'a' | 'A' -> 10u::l
+                                            | 'b' | 'B' -> 11u::l
+                                            | 'c' | 'C' -> 12u::l
+                                            | 'd' | 'D' -> 13u::l
+                                            | 'e' | 'E' -> 14u::l
+                                            | 'f' | 'F' -> 15u::l
+                                            | c -> failwith (c.ToString() + " not a hex character in cache feed.") ) [] (nnn.ToCharArray())
+                                            //seems to somehow not throw out of the two anon funs
+            let rec loop acc = function
+                | h1 :: h2 :: tl -> loop ((h1 |||  (h2  <<< 4)) :: acc) tl
+                | _ -> acc
                 
-                ()
-            else ()
+            let lBytes = loop [] l  //not really bytes, since they are int32
+                 
+            let rec loop2 = function
+                | h0 :: h1 :: h2 :: h3 :: h4 :: h5 :: h6 :: h7 :: tl -> 
+                    theQueue.Enqueue ( ((uint64 h0) <<< 56) ||| ((uint64 h1) <<< 48)  ||| ((uint64 h2) <<< 40)  ||| ((uint64 h3) <<< 32)  
+                                        ||| ((uint64 h4) <<< 24) ||| ((uint64 h5) <<< 16)  ||| ((uint64 h6) <<< 8)  ||| (uint64 h7) )
+                    loop2 tl
+                | _ -> ()
+            loop2 lBytes)
+
+        try
+            if mock.Length > 0 then 
+                Seq.iter f (seq {yield mock})
+            else 
+                Seq.iter f (AnuJSON.Parse (webClient.DownloadString (anuUrl + "?type=hex16&length=" + anuBlockCount.ToString() + "&size=1024"))).Data
         with
             | _ -> ()
 
@@ -261,14 +246,11 @@ type RandomBits =
 
     member inline private __.bigintU (x : uint64) = BigInteger(x)
 
+    /// constructor for streaming bits from ANU
     new () as __ =
         {anuBlockCount = 32;
         anuUrl = "https://qrng.anu.edu.au/API/jsonI.php";
         consume64Count = 0L;
-        maxCache = 4096;
-        maxPersistCache = 0;
-        persistPath = "";
-        reusePeristCache = false;
         theMock = "";
         theQueue = ConcurrentQueue<uint64>();
         bitSource = 0UL;
@@ -278,14 +260,12 @@ type RandomBits =
         then
         RandomBits.retrieveBits __.theQueue __.anuUrl __.anuBlockCount ""
 
+    /// constructor for testing
+    /// mock string representing at least one hexadecimal 64 bit unsigned integer
     new (mock) as __ =
         {anuBlockCount = 0;
         anuUrl = "";
-        maxCache = 1;
-        maxPersistCache = 0;
         consume64Count = 0L;
-        persistPath = "";
-        reusePeristCache = false;
         theMock = "\"" + mock + "\"";
         theQueue = ConcurrentQueue<uint64>();
         bitSource = 0UL;
@@ -317,15 +297,17 @@ type RandomBits =
 
         RandomBits.retrieveBits __.theQueue "" 0 __.theMock
 
+    /// count of unsigned 16 bit numbers to return from ANU on each call
     member __.ANU_BlockCount = __.anuBlockCount
+
+    /// url to the ANU JSON API
     member __.ANU_Url = __.anuUrl
+
+    /// count of unsigned 64 bit integers currently cached
     member __.CacheLength = __.theQueue.Count
+
+    /// count of unsigned 64 bit integer consumed
     member __.Consume64Count = __.consume64Count
-    member __.MaxCache = __.maxCache
-    member __.MaxPersistCache = __.maxPersistCache
-    member __.PersistCacheLength = 0
-    member __.PersistPath = __.persistPath
-    member __.ReusePeristCache = __.reusePeristCache
 
     (* random numbers *)
 

@@ -1,15 +1,15 @@
 framework: auto-detect
 
-source https://nuget.org/api/v2
+source https://nuget.org/v3/index.json
 source https://ci.appveyor.com/nuget/fsharp-formatting
 
 nuget FSharp.Core
-nuget FSharp.Data
+nuget FSharp.Data 3.0.0-beta
 nuget FSharpx.Collections
 nuget Argu
 
 nuget FAKE
-nuget FSharp.Formatting 3.0.0-beta08 beta
+nuget FSharp.Formatting 3.0.0-beta09 beta
 
 github fsharp/FAKE modules/Octokit/Octokit.fsx
 
