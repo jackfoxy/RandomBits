@@ -48,7 +48,7 @@ let solutionFile  = "RandomBits.sln"
 let configuration = "Release"
 
 // Pattern specifying assemblies to be tested using Expecto
-let testAssemblies = "tests/**/bin" </> configuration </> "net47" </> "*Tests.exe"
+let testAssemblies = "tests/**/bin" </> configuration </> "net45" </> "*Tests.exe"
 
 // Git configuration (used for publishing documentation in gh-pages branch)
 // The profile where the project is posted
@@ -123,7 +123,7 @@ let vsProjProps =
 #if MONO
     [ ("DefineConstants","MONO"); ("Configuration", configuration) ]
 #else
-    [ ("Configuration", configuration); ("Platform", "Any CPU") ]
+    [ ("Configuration", configuration); ("SourceLinkCreate", "true"); ("Platform", "Any CPU") ]
 #endif
 
 Target "Clean" (fun _ ->
@@ -153,7 +153,7 @@ Target "RunTests" (fun _ ->
 // --------------------------------------------------------------------------------------
 // Build a NuGet package
 
-Target "NuGet" (fun _ ->
+Target "NuGet.Pack" (fun _ ->
     Paket.Pack(fun p ->
         { p with
             OutputPath = "bin"
@@ -167,7 +167,6 @@ Target "PublishNuget" (fun _ ->
             PublishUrl = "https://www.nuget.org"
             WorkingDir = "bin" })
 )
-
 
 // --------------------------------------------------------------------------------------
 // Generate the documentation
@@ -349,7 +348,7 @@ Target "All" DoNothing
   ==> "RunTests"
   ==> "GenerateReferenceDocs"
   ==> "GenerateDocs"
-  ==> "NuGet"
+  ==> "NuGet.Pack"
   ==> "BuildPackage"
   ==> "All"
 

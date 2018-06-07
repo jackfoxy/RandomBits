@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net47</TargetFramework>
+    <TargetFrameworks>netcoreapp2.0;net47</TargetFrameworks>
     <RootNamespace>RandomBits.Tests</RootNamespace>
     <AssemblyName>RandomBits.Tests</AssemblyName>
     <Name>RandomBits.Tests</Name>

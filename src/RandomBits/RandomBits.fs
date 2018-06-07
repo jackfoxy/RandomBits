@@ -20,6 +20,57 @@ type RandomBits =
     val mutable private bitSource : uint64
     val mutable private ptr : uint64
  
+    /// constructor for streaming bits from ANU
+    new () as __ =
+        {anuBlockCount = 32;
+        anuUrl = "https://qrng.anu.edu.au/API/jsonI.php";
+        consume64Count = 0L;
+        theMock = "";
+        theQueue = ConcurrentQueue<uint64>();
+        bitSource = 0UL;
+        ptr = 0UL;
+         }
+
+        then
+        RandomBits.retrieveBits __.theQueue __.anuUrl __.anuBlockCount ""
+
+    /// constructor for testing
+    /// mock string representing at least one hexadecimal 64 bit unsigned integer
+    new (mock) as __ =
+        {anuBlockCount = 0;
+        anuUrl = "";
+        consume64Count = 0L;
+        theMock = "\"" + mock + "\"";
+        theQueue = ConcurrentQueue<uint64>();
+        bitSource = 0UL;
+        ptr = 0UL;
+         }
+
+        then
+        if __.theMock.Length < 18 then failwith "Mock string must represent at least one 64-bit integer"
+
+        let l = Array.fold (fun l t -> match t with
+                                        | '0' -> 0u::l
+                                        | '1' -> 1u::l
+                                        | '2' -> 2u::l
+                                        | '3' -> 3u::l
+                                        | '4' -> 4u::l
+                                        | '5' -> 5u::l
+                                        | '6' -> 6u::l
+                                        | '7' -> 7u::l
+                                        | '8' -> 8u::l
+                                        | '9' -> 9u::l
+                                        | 'a' | 'A' -> 10u::l
+                                        | 'b' | 'B' -> 11u::l
+                                        | 'c' | 'C' -> 12u::l
+                                        | 'd' | 'D' -> 13u::l
+                                        | 'e' | 'E' -> 14u::l
+                                        | 'f' | 'F' -> 15u::l
+                                        | c -> failwith (c.ToString() + " not a hex character in mock.") ) [] (mock.ToCharArray())
+                                        //seems to somehow not throw out of the two anon funs interfaceretrieveBits, so repeating it here
+
+        RandomBits.retrieveBits __.theQueue "" 0 __.theMock
+
     static member private retrieveBits (theQueue : ConcurrentQueue<uint64>) (anuUrl : string) (anuBlockCount : int) (mock : string) =
         use webClient = new WebClient()
 
@@ -245,57 +296,6 @@ type RandomBits =
     member inline private __.bigint (x : int64) = BigInteger(x)
 
     member inline private __.bigintU (x : uint64) = BigInteger(x)
-
-    /// constructor for streaming bits from ANU
-    new () as __ =
-        {anuBlockCount = 32;
-        anuUrl = "https://qrng.anu.edu.au/API/jsonI.php";
-        consume64Count = 0L;
-        theMock = "";
-        theQueue = ConcurrentQueue<uint64>();
-        bitSource = 0UL;
-        ptr = 0UL;
-         }
-
-        then
-        RandomBits.retrieveBits __.theQueue __.anuUrl __.anuBlockCount ""
-
-    /// constructor for testing
-    /// mock string representing at least one hexadecimal 64 bit unsigned integer
-    new (mock) as __ =
-        {anuBlockCount = 0;
-        anuUrl = "";
-        consume64Count = 0L;
-        theMock = "\"" + mock + "\"";
-        theQueue = ConcurrentQueue<uint64>();
-        bitSource = 0UL;
-        ptr = 0UL;
-         }
-
-        then
-        if __.theMock.Length < 18 then failwith "Mock string must represent at least one 64-bit integer"
-
-        let l = Array.fold (fun l t -> match t with
-                                        | '0' -> 0u::l
-                                        | '1' -> 1u::l
-                                        | '2' -> 2u::l
-                                        | '3' -> 3u::l
-                                        | '4' -> 4u::l
-                                        | '5' -> 5u::l
-                                        | '6' -> 6u::l
-                                        | '7' -> 7u::l
-                                        | '8' -> 8u::l
-                                        | '9' -> 9u::l
-                                        | 'a' | 'A' -> 10u::l
-                                        | 'b' | 'B' -> 11u::l
-                                        | 'c' | 'C' -> 12u::l
-                                        | 'd' | 'D' -> 13u::l
-                                        | 'e' | 'E' -> 14u::l
-                                        | 'f' | 'F' -> 15u::l
-                                        | c -> failwith (c.ToString() + " not a hex character in mock.") ) [] (mock.ToCharArray())
-                                        //seems to somehow not throw out of the two anon funs interfaceretrieveBits, so repeating it here
-
-        RandomBits.retrieveBits __.theQueue "" 0 __.theMock
 
     /// count of unsigned 16 bit numbers to return from ANU on each call
     member __.ANU_BlockCount = __.anuBlockCount
