@@ -57,23 +57,23 @@ the <a href="http://qrng.anu.edu.au/index.php">Australian National University Qu
 <span class="l">17: </span>
 <span class="l">18: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">RandomBits</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">RandomBits</span>
 
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">randomBits</span> <span class="o">=</span> <span class="k">new</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="d">RandomBits</span><span class="pn">(</span><span class="pn">)</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">randomBits</span> <span class="o">=</span> <span class="k">new</span> <span class="id">RandomBits</span><span class="pn">(</span><span class="pn">)</span>
 
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="id">boolSeq</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 5)" onmouseover="showTip(event, 'fs2', 5)" class="fn">randomBits</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs5', 6)" onmouseover="showTip(event, 'fs5', 6)" class="id">RndBoolSeq</span><span class="pn">(</span><span class="n">100</span><span class="pn">)</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">boolSeq</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="id">randomBits</span><span class="pn">.</span><span class="id">RndBoolSeq</span><span class="pn">(</span><span class="n">100</span><span class="pn">)</span>
 
-<span onmouseout="hideTip(event, 'fs6', 7)" onmouseover="showTip(event, 'fs6', 7)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%A</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs4', 8)" onmouseover="showTip(event, 'fs4', 8)" class="id">boolSeq</span>
+<span onmouseout="hideTip(event, 'fs3', 4)" onmouseover="showTip(event, 'fs3', 4)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%A</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs2', 5)" onmouseover="showTip(event, 'fs2', 5)" class="id">boolSeq</span>
 <span class="c">// seq [true; true; true; false; ...]</span>
 
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs7', 9)" onmouseover="showTip(event, 'fs7', 9)" class="id">signedByteSeq</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 10)" onmouseover="showTip(event, 'fs2', 10)" class="fn">randomBits</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs8', 11)" onmouseover="showTip(event, 'fs8', 11)" class="id">RndSByteSeq</span><span class="pn">(</span><span class="n">10000</span><span class="pn">)</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs4', 6)" onmouseover="showTip(event, 'fs4', 6)" class="id">signedByteSeq</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 7)" onmouseover="showTip(event, 'fs1', 7)" class="id">randomBits</span><span class="pn">.</span><span class="id">RndSByteSeq</span><span class="pn">(</span><span class="n">10000</span><span class="pn">)</span>
 
-<span onmouseout="hideTip(event, 'fs6', 12)" onmouseover="showTip(event, 'fs6', 12)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%A</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs7', 13)" onmouseover="showTip(event, 'fs7', 13)" class="id">signedByteSeq</span>
+<span onmouseout="hideTip(event, 'fs3', 8)" onmouseover="showTip(event, 'fs3', 8)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%A</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs4', 9)" onmouseover="showTip(event, 'fs4', 9)" class="id">signedByteSeq</span>
 <span class="c">// seq [-7y; -46y; 39y; 121y; ...]</span>
 
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs9', 14)" onmouseover="showTip(event, 'fs9', 14)" class="id">unSigned64BitSeq</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 15)" onmouseover="showTip(event, 'fs2', 15)" class="fn">randomBits</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs10', 16)" onmouseover="showTip(event, 'fs10', 16)" class="id">RndUint64Seq</span><span class="pn">(</span><span class="n">25</span><span class="pn">)</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 10)" onmouseover="showTip(event, 'fs5', 10)" class="id">unSigned64BitSeq</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 11)" onmouseover="showTip(event, 'fs1', 11)" class="id">randomBits</span><span class="pn">.</span><span class="id">RndUint64Seq</span><span class="pn">(</span><span class="n">25</span><span class="pn">)</span>
 
-<span onmouseout="hideTip(event, 'fs6', 17)" onmouseover="showTip(event, 'fs6', 17)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%A</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs9', 18)" onmouseover="showTip(event, 'fs9', 18)" class="id">unSigned64BitSeq</span>
+<span onmouseout="hideTip(event, 'fs3', 12)" onmouseover="showTip(event, 'fs3', 12)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%A</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs5', 13)" onmouseover="showTip(event, 'fs5', 13)" class="id">unSigned64BitSeq</span>
 <span class="c">// seq [1906034160960843131UL; 6192668109370953241UL; 4558849705110384999UL; 866484679755652446UL; ...]</span>
 </code></pre></td>
 </tr>
@@ -99,24 +99,24 @@ the <a href="http://qrng.anu.edu.au/index.php">Australian National University Qu
 <span class="l">18: </span>
 <span class="l">19: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs11', 19)" onmouseover="showTip(event, 'fs11', 19)" class="id">randomBool</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 20)" onmouseover="showTip(event, 'fs2', 20)" class="fn">randomBits</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs12', 21)" onmouseover="showTip(event, 'fs12', 21)" class="id">RndBool</span><span class="pn">(</span><span class="pn">)</span>
-<span onmouseout="hideTip(event, 'fs6', 22)" onmouseover="showTip(event, 'fs6', 22)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%b</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs11', 23)" onmouseover="showTip(event, 'fs11', 23)" class="id">randomBool</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs6', 14)" onmouseover="showTip(event, 'fs6', 14)" class="id">randomBool</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 15)" onmouseover="showTip(event, 'fs1', 15)" class="id">randomBits</span><span class="pn">.</span><span class="id">RndBool</span><span class="pn">(</span><span class="pn">)</span>
+<span onmouseout="hideTip(event, 'fs3', 16)" onmouseover="showTip(event, 'fs3', 16)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%b</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs6', 17)" onmouseover="showTip(event, 'fs6', 17)" class="id">randomBool</span>
 <span class="c">// false</span>
 
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs13', 24)" onmouseover="showTip(event, 'fs13', 24)" class="id">randomUnsignedByte</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 25)" onmouseover="showTip(event, 'fs2', 25)" class="fn">randomBits</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs14', 26)" onmouseover="showTip(event, 'fs14', 26)" class="id">RndByte</span><span class="pn">(</span><span class="pn">)</span>
-<span onmouseout="hideTip(event, 'fs6', 27)" onmouseover="showTip(event, 'fs6', 27)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%A</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs13', 28)" onmouseover="showTip(event, 'fs13', 28)" class="id">randomUnsignedByte</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs7', 18)" onmouseover="showTip(event, 'fs7', 18)" class="id">randomUnsignedByte</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 19)" onmouseover="showTip(event, 'fs1', 19)" class="id">randomBits</span><span class="pn">.</span><span class="id">RndByte</span><span class="pn">(</span><span class="pn">)</span>
+<span onmouseout="hideTip(event, 'fs3', 20)" onmouseover="showTip(event, 'fs3', 20)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%A</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs7', 21)" onmouseover="showTip(event, 'fs7', 21)" class="id">randomUnsignedByte</span>
 <span class="c">// 211uy</span>
 
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs15', 29)" onmouseover="showTip(event, 'fs15', 29)" class="id">randomSigned16Bit</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 30)" onmouseover="showTip(event, 'fs2', 30)" class="fn">randomBits</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs16', 31)" onmouseover="showTip(event, 'fs16', 31)" class="id">RndInt16</span><span class="pn">(</span><span class="pn">)</span>
-<span onmouseout="hideTip(event, 'fs6', 32)" onmouseover="showTip(event, 'fs6', 32)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%A</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs15', 33)" onmouseover="showTip(event, 'fs15', 33)" class="id">randomSigned16Bit</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs8', 22)" onmouseover="showTip(event, 'fs8', 22)" class="id">randomSigned16Bit</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 23)" onmouseover="showTip(event, 'fs1', 23)" class="id">randomBits</span><span class="pn">.</span><span class="id">RndInt16</span><span class="pn">(</span><span class="pn">)</span>
+<span onmouseout="hideTip(event, 'fs3', 24)" onmouseover="showTip(event, 'fs3', 24)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%A</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs8', 25)" onmouseover="showTip(event, 'fs8', 25)" class="id">randomSigned16Bit</span>
 <span class="c">// 1628s</span>
 
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs17', 34)" onmouseover="showTip(event, 'fs17', 34)" class="id">randomUnsigned32Bit</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 35)" onmouseover="showTip(event, 'fs2', 35)" class="fn">randomBits</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs18', 36)" onmouseover="showTip(event, 'fs18', 36)" class="id">RndUint32</span><span class="pn">(</span><span class="pn">)</span>
-<span onmouseout="hideTip(event, 'fs6', 37)" onmouseover="showTip(event, 'fs6', 37)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%i</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs17', 38)" onmouseover="showTip(event, 'fs17', 38)" class="id">randomUnsigned32Bit</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs9', 26)" onmouseover="showTip(event, 'fs9', 26)" class="id">randomUnsigned32Bit</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 27)" onmouseover="showTip(event, 'fs1', 27)" class="id">randomBits</span><span class="pn">.</span><span class="id">RndUint32</span><span class="pn">(</span><span class="pn">)</span>
+<span onmouseout="hideTip(event, 'fs3', 28)" onmouseover="showTip(event, 'fs3', 28)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%i</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs9', 29)" onmouseover="showTip(event, 'fs9', 29)" class="id">randomUnsigned32Bit</span>
 <span class="c">// 3485950116</span>
 
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs19', 39)" onmouseover="showTip(event, 'fs19', 39)" class="id">randomeSigned64Bit</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 40)" onmouseover="showTip(event, 'fs2', 40)" class="fn">randomBits</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs20', 41)" onmouseover="showTip(event, 'fs20', 41)" class="id">RndInt64</span><span class="pn">(</span><span class="pn">)</span>
-<span onmouseout="hideTip(event, 'fs6', 42)" onmouseover="showTip(event, 'fs6', 42)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%i</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs19', 43)" onmouseover="showTip(event, 'fs19', 43)" class="id">randomeSigned64Bit</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs10', 30)" onmouseover="showTip(event, 'fs10', 30)" class="id">randomeSigned64Bit</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 31)" onmouseover="showTip(event, 'fs1', 31)" class="id">randomBits</span><span class="pn">.</span><span class="id">RndInt64</span><span class="pn">(</span><span class="pn">)</span>
+<span onmouseout="hideTip(event, 'fs3', 32)" onmouseover="showTip(event, 'fs3', 32)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%i</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs10', 33)" onmouseover="showTip(event, 'fs10', 33)" class="id">randomeSigned64Bit</span>
 <span class="c">// 592053077296867471</span>
 </code></pre></td>
 </tr>
@@ -131,12 +131,12 @@ the <a href="http://qrng.anu.edu.au/index.php">Australian National University Qu
 <span class="l">6: </span>
 <span class="l">7: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs21', 44)" onmouseover="showTip(event, 'fs21', 44)" class="id">randomConstrainedByte</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 45)" onmouseover="showTip(event, 'fs2', 45)" class="fn">randomBits</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs22', 46)" onmouseover="showTip(event, 'fs22', 46)" class="id">RndSByte</span><span class="pn">(</span><span class="n">50y</span><span class="pn">,</span> <span class="n">100y</span><span class="pn">)</span>
-<span onmouseout="hideTip(event, 'fs6', 47)" onmouseover="showTip(event, 'fs6', 47)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%A</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs21', 48)" onmouseover="showTip(event, 'fs21', 48)" class="id">randomConstrainedByte</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs11', 34)" onmouseover="showTip(event, 'fs11', 34)" class="id">randomConstrainedByte</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 35)" onmouseover="showTip(event, 'fs1', 35)" class="id">randomBits</span><span class="pn">.</span><span class="id">RndSByte</span><span class="pn">(</span><span class="n">50y</span><span class="pn">,</span> <span class="n">100y</span><span class="pn">)</span>
+<span onmouseout="hideTip(event, 'fs3', 36)" onmouseover="showTip(event, 'fs3', 36)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%A</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs11', 37)" onmouseover="showTip(event, 'fs11', 37)" class="id">randomConstrainedByte</span>
 <span class="c">// 80y</span>
 
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs23', 49)" onmouseover="showTip(event, 'fs23', 49)" class="id">randomConstrainedU64Int</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 50)" onmouseover="showTip(event, 'fs2', 50)" class="fn">randomBits</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs24', 51)" onmouseover="showTip(event, 'fs24', 51)" class="id">RndUint64</span><span class="pn">(</span><span class="n">1000000000000UL</span><span class="pn">,</span> <span class="n">1000000000200UL</span><span class="pn">)</span>
-<span onmouseout="hideTip(event, 'fs6', 52)" onmouseover="showTip(event, 'fs6', 52)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%A</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs23', 53)" onmouseover="showTip(event, 'fs23', 53)" class="id">randomConstrainedU64Int</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs12', 38)" onmouseover="showTip(event, 'fs12', 38)" class="id">randomConstrainedU64Int</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 39)" onmouseover="showTip(event, 'fs1', 39)" class="id">randomBits</span><span class="pn">.</span><span class="id">RndUint64</span><span class="pn">(</span><span class="n">1000000000000UL</span><span class="pn">,</span> <span class="n">1000000000200UL</span><span class="pn">)</span>
+<span onmouseout="hideTip(event, 'fs3', 40)" onmouseover="showTip(event, 'fs3', 40)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%A</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs12', 41)" onmouseover="showTip(event, 'fs12', 41)" class="id">randomConstrainedU64Int</span>
 <span class="c">// 1000000000091UL</span>
 </code></pre></td>
 </tr>
@@ -147,8 +147,8 @@ the <a href="http://qrng.anu.edu.au/index.php">Australian National University Qu
 <span class="l">2: </span>
 <span class="l">3: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs25', 54)" onmouseover="showTip(event, 'fs25', 54)" class="id">randomConstrainedInt32Seq</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 55)" onmouseover="showTip(event, 'fs2', 55)" class="fn">randomBits</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs26', 56)" onmouseover="showTip(event, 'fs26', 56)" class="id">RndInt32Seq</span><span class="pn">(</span><span class="n">256</span><span class="pn">,</span> <span class="n">1024</span><span class="pn">,</span> <span class="n">100</span><span class="pn">)</span>
-<span onmouseout="hideTip(event, 'fs6', 57)" onmouseover="showTip(event, 'fs6', 57)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%A</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs25', 58)" onmouseover="showTip(event, 'fs25', 58)" class="id">randomConstrainedInt32Seq</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs13', 42)" onmouseover="showTip(event, 'fs13', 42)" class="id">randomConstrainedInt32Seq</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 43)" onmouseover="showTip(event, 'fs1', 43)" class="id">randomBits</span><span class="pn">.</span><span class="id">RndInt32Seq</span><span class="pn">(</span><span class="n">256</span><span class="pn">,</span> <span class="n">1024</span><span class="pn">,</span> <span class="n">100</span><span class="pn">)</span>
+<span onmouseout="hideTip(event, 'fs3', 44)" onmouseover="showTip(event, 'fs3', 44)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%A</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs13', 45)" onmouseover="showTip(event, 'fs13', 45)" class="id">randomConstrainedInt32Seq</span>
 <span class="c">// seq [505; 954; 598; 280; ...]</span>
 </code></pre></td>
 </tr>
@@ -159,8 +159,8 @@ the <a href="http://qrng.anu.edu.au/index.php">Australian National University Qu
 <span class="l">2: </span>
 <span class="l">3: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs27', 59)" onmouseover="showTip(event, 'fs27', 59)" class="id">randomUniqeConstrainedInt16Seq</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 60)" onmouseover="showTip(event, 'fs2', 60)" class="fn">randomBits</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs28', 61)" onmouseover="showTip(event, 'fs28', 61)" class="id">RndInt16UniqueSeq</span><span class="pn">(</span><span class="n">256s</span><span class="pn">,</span> <span class="n">1024s</span><span class="pn">,</span> <span class="n">200</span><span class="pn">)</span>
-<span onmouseout="hideTip(event, 'fs6', 62)" onmouseover="showTip(event, 'fs6', 62)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%A</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs27', 63)" onmouseover="showTip(event, 'fs27', 63)" class="id">randomUniqeConstrainedInt16Seq</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs14', 46)" onmouseover="showTip(event, 'fs14', 46)" class="id">randomUniqeConstrainedInt16Seq</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 47)" onmouseover="showTip(event, 'fs1', 47)" class="id">randomBits</span><span class="pn">.</span><span class="id">RndInt16UniqueSeq</span><span class="pn">(</span><span class="n">256s</span><span class="pn">,</span> <span class="n">1024s</span><span class="pn">,</span> <span class="n">200</span><span class="pn">)</span>
+<span onmouseout="hideTip(event, 'fs3', 48)" onmouseover="showTip(event, 'fs3', 48)" class="fn">printfn</span> <span class="s">&quot;</span><span class="pf">%A</span><span class="s">&quot;</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs14', 49)" onmouseover="showTip(event, 'fs14', 49)" class="id">randomUniqeConstrainedInt16Seq</span>
 <span class="c">// seq [266s; 665s; 457s; 392s; ...]</span>
 </code></pre></td>
 </tr>
@@ -181,34 +181,20 @@ add tests and samples that can be turned into <a href="https://github.com/jackfo
 redistribution for both commercial and non-commercial purposes. For more information see the
 <a href="https://github.com/jackfoxy/RandomBits/blob/master/LICENSE.txt">License file</a> in the GitHub repository.</p>
 
-<div class="tip" id="fs1">namespace RandomBits</div>
-<div class="tip" id="fs2">val randomBits : RandomBits</div>
-<div class="tip" id="fs3">Multiple items<br />namespace RandomBits<br /><br />--------------------<br />type RandomBits =<br />&#160;&#160;interface IDisposable<br />&#160;&#160;new : unit -&gt; RandomBits<br />&#160;&#160;new : mock:string -&gt; RandomBits<br />&#160;&#160;val private anuBlockCount: int<br />&#160;&#160;val private anuUrl: string<br />&#160;&#160;val mutable private consume64Count: int64<br />&#160;&#160;val private maxCache: int<br />&#160;&#160;val private maxPersistCache: int<br />&#160;&#160;val private persistPath: string<br />&#160;&#160;val private reusePeristCache: bool<br />&#160;&#160;...<br /><br />--------------------<br />new : unit -&gt; RandomBits<br />new : mock:string -&gt; RandomBits</div>
-<div class="tip" id="fs4">val boolSeq : seq&lt;bool&gt;</div>
-<div class="tip" id="fs5">member RandomBits.RndBoolSeq : length:int -&gt; seq&lt;bool&gt;</div>
-<div class="tip" id="fs6">val printfn : format:Printf.TextWriterFormat&lt;&#39;T&gt; -&gt; &#39;T</div>
-<div class="tip" id="fs7">val signedByteSeq : seq&lt;sbyte&gt;</div>
-<div class="tip" id="fs8">member RandomBits.RndSByteSeq : length:int -&gt; seq&lt;sbyte&gt;<br />member RandomBits.RndSByteSeq : inclLower:sbyte * exlUpper:sbyte * length:int -&gt; seq&lt;sbyte&gt;</div>
-<div class="tip" id="fs9">val unSigned64BitSeq : seq&lt;uint64&gt;</div>
-<div class="tip" id="fs10">member RandomBits.RndUint64Seq : length:int -&gt; seq&lt;uint64&gt;<br />member RandomBits.RndUint64Seq : inclLower:uint64 * exlUpper:uint64 * length:int -&gt; seq&lt;uint64&gt;</div>
-<div class="tip" id="fs11">val randomBool : bool</div>
-<div class="tip" id="fs12">member RandomBits.RndBool : unit -&gt; bool</div>
-<div class="tip" id="fs13">val randomUnsignedByte : byte</div>
-<div class="tip" id="fs14">member RandomBits.RndByte : unit -&gt; byte<br />member RandomBits.RndByte : inclLower:byte * exlUpper:byte -&gt; byte</div>
-<div class="tip" id="fs15">val randomSigned16Bit : int16</div>
-<div class="tip" id="fs16">member RandomBits.RndInt16 : unit -&gt; int16<br />member RandomBits.RndInt16 : inclLower:int16 * exlUpper:int16 -&gt; int16</div>
-<div class="tip" id="fs17">val randomUnsigned32Bit : uint32</div>
-<div class="tip" id="fs18">member RandomBits.RndUint32 : unit -&gt; uint32<br />member RandomBits.RndUint32 : inclLower:uint32 * exlUpper:uint32 -&gt; uint32</div>
-<div class="tip" id="fs19">val randomeSigned64Bit : int64</div>
-<div class="tip" id="fs20">member RandomBits.RndInt64 : unit -&gt; int64<br />member RandomBits.RndInt64 : inclLower:int64 * exlUpper:int64 -&gt; int64</div>
-<div class="tip" id="fs21">val randomConstrainedByte : sbyte</div>
-<div class="tip" id="fs22">member RandomBits.RndSByte : unit -&gt; sbyte<br />member RandomBits.RndSByte : inclLower:sbyte * exlUpper:sbyte -&gt; sbyte</div>
-<div class="tip" id="fs23">val randomConstrainedU64Int : uint64</div>
-<div class="tip" id="fs24">member RandomBits.RndUint64 : unit -&gt; uint64<br />member RandomBits.RndUint64 : inclLower:uint64 * exlUpper:uint64 -&gt; uint64</div>
-<div class="tip" id="fs25">val randomConstrainedInt32Seq : seq&lt;int&gt;</div>
-<div class="tip" id="fs26">member RandomBits.RndInt32Seq : length:int -&gt; seq&lt;int&gt;<br />member RandomBits.RndInt32Seq : inclLower:int * exlUpper:int * length:int -&gt; seq&lt;int&gt;</div>
-<div class="tip" id="fs27">val randomUniqeConstrainedInt16Seq : seq&lt;int16&gt;</div>
-<div class="tip" id="fs28">member RandomBits.RndInt16UniqueSeq : inclLower:int16 * exlUpper:int16 * length:int -&gt; seq&lt;int16&gt;</div>
+<div class="tip" id="fs1">val randomBits : obj</div>
+<div class="tip" id="fs2">val boolSeq : obj</div>
+<div class="tip" id="fs3">val printfn : format:Printf.TextWriterFormat&lt;&#39;T&gt; -&gt; &#39;T</div>
+<div class="tip" id="fs4">val signedByteSeq : obj</div>
+<div class="tip" id="fs5">val unSigned64BitSeq : obj</div>
+<div class="tip" id="fs6">val randomBool : bool</div>
+<div class="tip" id="fs7">val randomUnsignedByte : obj</div>
+<div class="tip" id="fs8">val randomSigned16Bit : obj</div>
+<div class="tip" id="fs9">val randomUnsigned32Bit : int</div>
+<div class="tip" id="fs10">val randomeSigned64Bit : int</div>
+<div class="tip" id="fs11">val randomConstrainedByte : obj</div>
+<div class="tip" id="fs12">val randomConstrainedU64Int : obj</div>
+<div class="tip" id="fs13">val randomConstrainedInt32Seq : obj</div>
+<div class="tip" id="fs14">val randomUniqeConstrainedInt16Seq : obj</div>
 
         </div>
         <div class="span3">
